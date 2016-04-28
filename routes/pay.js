@@ -7,8 +7,36 @@ var router = express.Router();
 
 router.post("/",function(req,res,next)
 {
-    var pay = req.body.payType;
-    res.send('post test pay');
+    var type = req.body.payType;
+    var callback = function(error,result)
+    {
+        if(error)
+        {
+            next(error,result);
+        }
+        else
+        {
+            var returnParam =
+            {
+                code:200,
+                message:"pay_Service deal success",
+                data:result
+            };
+            res.send(returnParam);
+        }
+    };
+   if(parseInt(type)=== payManager.payTypeEnum.weiChat)
+   {
+       payManager.weiChatPay(req.body,callback);
+   }
+   else if(parseInt(type) === payManager.payTypeEnum.aliPay)
+   {
+       payManager.aliPay(req.body,callback);
+   }
+   else
+   {
+       res.send('pay type:'+type+' error');
+   }
 });
 
 router.get("/",function(req,res,next)
