@@ -6,7 +6,6 @@ var moment = require("moment");
 var crypto = require("crypto");
 var xml2js = require('xml2js');
 var request = require('request');
-var code = require("./code");
 var parseString = require('xml2js').parseString;
 /**
  * 支付类型枚举
@@ -14,7 +13,7 @@ var parseString = require('xml2js').parseString;
  */
 payManager.payTypeEnum =
 {
-    weiChat :1,
+    weChat :1,
     aliPay:2
 };
 
@@ -97,7 +96,7 @@ var signWeiXinPayReturn = function(params,key)
  * @param params 参数
  * @param callback 回调
  */
-payManager.weiChatPay = function(params,callback)
+payManager.weChatPay = function(params,callback)
 {
     //统一下单
     var wxParam =
@@ -136,10 +135,10 @@ payManager.weiChatPay = function(params,callback)
             parseString(body, function (err, result) {
                 if(!err)
                 {
-                    //console.log(result);
+                    console.log(result);
                     var realResult = result["xml"];
                     //console.log(realResult["return_code"][0]);
-                    if(realResult["return_code"][0] === "SUCCESS")
+                    if(realResult["result_code"][0] === "SUCCESS")
                     {
                         var prepay_id = realResult["prepay_id"][0];
                         var returnParam=
@@ -171,9 +170,10 @@ payManager.weiChatPay = function(params,callback)
                     else
                     {
                         //console.log("失败!");
-                        var errorMessage  ="调用微信支付统一下单接口时"+realResult["return_msg"][0];
-                        var wxError = new Error(errorMessage,code.wxGetOrderError);
-                        wxError.status = code.wxGetOrderError;
+                        var errorMessage  ="调用微信支付统一下单接口时错误:"+realResult["err_code_des"][0];
+                        var errorCode = realResult["err_code"][0];
+                        var wxError = new Error(errorMessage,errorCode);
+                        wxError.status = errorCode;
                         callback(wxError,{});
                     }
                 }
@@ -189,11 +189,6 @@ payManager.weiChatPay = function(params,callback)
         }
     });
 };
-
-
-
-
-
 
 /**
  * 支付宝支付
