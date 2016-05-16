@@ -49,6 +49,8 @@ var getRandomString  = function(length)
  */
 var signWeiXinPay = function(params,key)
 {
+    //console.log(params);
+    //console.log(key);
     var stringA = "appid="+params.appid+"&"+
         "body="+params.body+"&"+
         "mch_id="+params.mch_id+"&"+
@@ -60,11 +62,13 @@ var signWeiXinPay = function(params,key)
         "total_fee="+params.total_fee+"&"+
         "trade_type="+params.trade_type+"&"+
         "key="+key;
+    //console.log(stringA);
     stringA = (new Buffer(stringA)).toString("binary");
     //console.log(stringA);
     var md5sum = crypto.createHash('md5');
     md5sum.update(stringA);
     var sign = md5sum.digest('hex').toUpperCase();
+    //console.log(sign);
     return sign;
 };
 
@@ -98,6 +102,7 @@ var signWeiXinPayReturn = function(params,key)
  */
 payManager.weChatPay = function(params,callback)
 {
+    //console.log(params);
     //统一下单
     var wxParam =
     {
@@ -135,10 +140,11 @@ payManager.weChatPay = function(params,callback)
             parseString(body, function (err, result) {
                 if(!err)
                 {
-                    console.log(result);
+                    //console.log(result);
                     var realResult = result["xml"];
                     //console.log(realResult["return_code"][0]);
-                    if(realResult["result_code"][0] === "SUCCESS")
+                    var returnCode = realResult["return_code"][0];
+                    if(returnCode === "SUCCESS")
                     {
                         var prepay_id = realResult["prepay_id"][0];
                         var returnParam=
@@ -151,7 +157,7 @@ payManager.weChatPay = function(params,callback)
                             timestamp:parseInt(new Date().getTime()/1000).toString()
                         };
                         returnParam.sign = signWeiXinPayReturn(returnParam,params.key);
-                        if(parseInt(params.deviceType) === payManager.payDeviceType.android)
+                        if(parseInt(params.payDeviceType) === payManager.payDeviceType.android)
                         {
                             var tempParam = returnParam;
                             returnParam =
@@ -170,8 +176,8 @@ payManager.weChatPay = function(params,callback)
                     else
                     {
                         //console.log("失败!");
-                        var errorMessage  ="调用微信支付统一下单接口时错误:"+realResult["err_code_des"][0];
-                        var errorCode = realResult["err_code"][0];
+                        var errorMessage  ="调用微信支付统一下单接口时错误:"+realResult["return_msg"][0];
+                        var errorCode = returnCode;
                         var wxError = new Error(errorMessage,errorCode);
                         wxError.status = errorCode;
                         callback(wxError,{});
