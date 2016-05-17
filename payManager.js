@@ -38,7 +38,7 @@ var getRandomString  = function(length)
         var id = Math.ceil(Math.random()*35);
         res += chars[id];
     }
-    return res;
+    return res.toLowerCase();
 };
 
 /**
