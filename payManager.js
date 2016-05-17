@@ -96,6 +96,11 @@ var signWeiXinPayReturn = function(params,key)
     return sign;
 };
 
+var adroidWeiXinPayReturn = function(params,key)
+{
+
+};
+
 /**
  * 微信支付
  * @param params 参数
@@ -165,12 +170,12 @@ payManager.weChatPay = function(params,callback)
                             returnParam =
                             {
                                 appId:tempParam.appid,
-                                nonceStr:returnParam.noncestr,
-                                packageValue: returnParam.package,
-                                partnerId: returnParam.partnerid,
-                                prepayId:returnParam.prepayid,
-                                timeStamp:returnParam.timestamp,
-                                sign:returnParam.sign
+                                nonceStr:tempParam.noncestr,
+                                packageValue: tempParam.package,
+                                partnerId: tempParam.partnerid,
+                                prepayId:tempParam.prepayid,
+                                timeStamp:tempParam.timestamp,
+                                sign:tempParam.sign
                             }
                         }
                         console.log(returnParam);
