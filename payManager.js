@@ -80,6 +80,7 @@ var signWeiXinPay = function(params,key)
  */
 var signWeiXinPayReturn = function(params,key)
 {
+    console.log("key:"+key);
     var stringA = "appid="+params.appid+"&"+
         "noncestr="+params.noncestr+"&"+
         "package="+params.package+"&"+
