@@ -159,6 +159,7 @@ payManager.weChatPay = function(params,callback)
                         returnParam.sign = signWeiXinPayReturn(returnParam,params.key);
                         if(parseInt(params.payDeviceType) === payManager.payDeviceType.android)
                         {
+                            console.log("安卓");
                             var tempParam = returnParam;
                             returnParam =
                             {
@@ -171,6 +172,7 @@ payManager.weChatPay = function(params,callback)
                                 sign:returnParam.sign
                             }
                         }
+                        console.log(returnParam);
                         callback(null,returnParam);
                     }
                     else
