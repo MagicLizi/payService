@@ -49,8 +49,8 @@ var getRandomString  = function(length)
  */
 var signWeiXinPay = function(params,key)
 {
-    //console.log(params);
-    //console.log(key);
+    console.log(params);
+    console.log(key);
     var stringA = "appid="+params.appid+"&"+
         "body="+params.body+"&"+
         "mch_id="+params.mch_id+"&"+
@@ -64,11 +64,11 @@ var signWeiXinPay = function(params,key)
         "key="+key;
     //console.log(stringA);
     stringA = (new Buffer(stringA)).toString("binary");
-    //console.log(stringA);
+    console.log(stringA);
     var md5sum = crypto.createHash('md5');
     md5sum.update(stringA);
     var sign = md5sum.digest('hex').toUpperCase();
-    //console.log(sign);
+    console.log(sign);
     return sign;
 };
 
@@ -129,7 +129,7 @@ payManager.weChatPay = function(params,callback)
     //console.log(wxParam);
     var builder = new xml2js.Builder();
     var xmlwxParam = builder.buildObject(wxParam);
-    console.log(xmlwxParam);
+    //console.log(xmlwxParam);
     var requestOptions = {
         url: 'https://api.mch.weixin.qq.com/pay/unifiedorder',
         headers: {
@@ -147,7 +147,7 @@ payManager.weChatPay = function(params,callback)
             parseString(body, function (err, result) {
                 if(!err)
                 {
-                    console.log(result);
+                    //console.log(result);
                     var realResult = result["xml"];
                     //console.log(realResult["return_code"][0]);
                     var returnCode = realResult["return_code"][0];
