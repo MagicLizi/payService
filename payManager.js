@@ -108,7 +108,7 @@ var adroidWeiXinPayReturn = function(params,key)
  */
 payManager.weChatPay = function(params,callback)
 {
-    //console.log(params);
+    console.log(params);
     //统一下单
     var wxParam =
     {
@@ -124,11 +124,12 @@ payManager.weChatPay = function(params,callback)
         sign:"",
         time_start:moment(new Date()).format("YYYYMMDDHHMMSS")
     };
+
     wxParam.sign = signWeiXinPay(wxParam,params.key);
-    //console.log(wxParam);
+    console.log(wxParam);
     var builder = new xml2js.Builder();
     var xmlwxParam = builder.buildObject(wxParam);
-    //console.log(xmlwxParam);
+    console.log(xmlwxParam);
     var requestOptions = {
         url: 'https://api.mch.weixin.qq.com/pay/unifiedorder',
         headers: {
@@ -178,6 +179,7 @@ payManager.weChatPay = function(params,callback)
                                 sign:tempParam.sign
                             }
                         }
+                        console.log("return");
                         console.log(returnParam);
                         callback(null,returnParam);
                     }
