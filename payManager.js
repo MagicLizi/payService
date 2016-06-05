@@ -62,9 +62,9 @@ var signWeiXinPay = function(params,key)
         "total_fee="+params.total_fee+"&"+
         "trade_type="+params.trade_type+"&"+
         "key="+key;
-    //console.log(stringA);
-    stringA = (new Buffer(stringA)).toString("binary");
     console.log(stringA);
+    stringA = (new Buffer(stringA)).toString("binary");
+    //console.log(stringA);
     var md5sum = crypto.createHash('md5');
     md5sum.update(stringA);
     var sign = md5sum.digest('hex').toUpperCase();
@@ -115,7 +115,7 @@ payManager.weChatPay = function(params,callback)
         appid: params.appid,
         mch_id: params.mch_id,
         nonce_str: getRandomString(32),
-        body: "test",
+        body: params.body,
         out_trade_no: params.out_trade_no,
         total_fee: params.total_fee,
         spbill_create_ip: params.spbill_create_ip,
