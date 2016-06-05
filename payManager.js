@@ -115,7 +115,7 @@ payManager.weChatPay = function(params,callback)
         appid: params.appid,
         mch_id: params.mch_id,
         nonce_str: getRandomString(32),
-        body: params.body,
+        body: "test",
         out_trade_no: params.out_trade_no,
         total_fee: params.total_fee,
         spbill_create_ip: params.spbill_create_ip,
