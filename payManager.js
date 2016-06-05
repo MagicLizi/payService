@@ -64,7 +64,7 @@ var signWeiXinPay = function(params,key)
         "key="+key;
     console.log(stringA);
     stringA = (new Buffer(stringA)).toString("binary");
-    //console.log(stringA);
+    console.log(stringA);
     var md5sum = crypto.createHash('md5');
     md5sum.update(stringA);
     var sign = md5sum.digest('hex').toUpperCase();
