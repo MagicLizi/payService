@@ -108,7 +108,7 @@ var adroidWeiXinPayReturn = function(params,key)
  */
 payManager.weChatPay = function(params,callback)
 {
-    console.log(params);
+    //console.log(params);
     //统一下单
     var wxParam =
     {
@@ -126,7 +126,7 @@ payManager.weChatPay = function(params,callback)
     };
 
     wxParam.sign = signWeiXinPay(wxParam,params.key);
-    console.log(wxParam);
+    //console.log(wxParam);
     var builder = new xml2js.Builder();
     var xmlwxParam = builder.buildObject(wxParam);
     console.log(xmlwxParam);
@@ -147,7 +147,7 @@ payManager.weChatPay = function(params,callback)
             parseString(body, function (err, result) {
                 if(!err)
                 {
-                    //console.log(result);
+                    console.log(result);
                     var realResult = result["xml"];
                     //console.log(realResult["return_code"][0]);
                     var returnCode = realResult["return_code"][0];
