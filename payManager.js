@@ -63,7 +63,7 @@ var signWeiXinPay = function(params,key)
         "trade_type="+params.trade_type+"&"+
         "key="+key;
     console.log(stringA);
-    stringA = (new Buffer(stringA)).toString("binary");
+   // stringA = (new Buffer(stringA)).toString("binary");
     console.log(stringA);
     var md5sum = crypto.createHash('md5');
     md5sum.update(stringA);
